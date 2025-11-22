@@ -2,326 +2,324 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WetTech</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WetTech</title>
+
 <style>
-
-/* ---------------- GLOBAL ---------------- */
-
-body {
+/* GLOBAL */
+body, html {
     margin: 0;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: #ffffff;
-    overflow-x: hidden;
+    color: #333;
+    scroll-behavior: smooth;
 }
 
-/* Rounded elements */
-section, .card {
-    border-radius: 18px;
-}
-
-/* ---------------- LOADING SCREEN ---------------- */
-
+/* LOADING SCREEN */
 #loader {
     position: fixed;
     inset: 0;
-    background: #ffffff;
+    background: #fff;
     display: flex;
     flex-direction: column;
-    gap: 15px;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
-
 #loader img {
     width: 120px;
     height: auto;
 }
-
-.loader-link {
-    font-size: 16px;
-    text-decoration: underline;
-    cursor: default;
-    opacity: 0.6;
+.link-loader {
+    margin-top: 20px;
+    width: 60px;
+    height: 6px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #ddd;
+    position: relative;
+}
+.link-loader::after {
+    content: "";
+    position: absolute;
+    left: -40px;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(90deg, #ffabd1, #ffe6a8, #b7d7ff);
+    animation: linkMove 1s infinite linear;
+}
+@keyframes linkMove {
+    0% { left: -40px; }
+    100% { left: 100%; }
 }
 
-/* ---------------- NAVBAR ---------------- */
-
+/* NAVBAR */
 nav {
+    width: 100%;
+    padding: 15px 25px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 15px 30px;
+    align-items: center;
     background: #ffffff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-radius: 0 0 20px 20px;
 }
-
 nav img {
-    height: 42px;
+    height: 45px;
+    border-radius: 10px;
 }
-
 nav a {
-    margin-left: 25px;
+    margin-left: 18px;
     text-decoration: none;
-    color: #444;
-    font-weight: 500;
+    color: #333;
+    font-weight: 600;
 }
 
-/* ---------------- HERO SECTION ---------------- */
-
+/* HERO */
 .hero {
-    height: 420px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
+    text-align: center;
     color: #333;
-    animation: gradientMove 8s ease infinite;
-    background: linear-gradient(135deg,
-        #f7c6f9,
-        #fdf4a9,
-        #cde8ff
-    );
-    background-size: 300% 300%;
-}
-
-@keyframes gradientMove {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-
-.hero h1 {
-    font-size: 48px;
-    margin: 0 0 10px;
-}
-
-.hero p {
-    font-size: 20px;
-    max-width: 600px;
-}
-
-/* ---------------- ABOUT US ---------------- */
-
-#about {
-    margin: 40px;
-    padding: 30px;
-    background: #fafafa;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-}
-
-/* ---------------- SERVICES ---------------- */
-
-#services {
-    margin: 40px;
-}
-
-.card {
-    background: #fafafa;
-    padding: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
-}
-
-/* ---------------- OUR COMPANIES ---------------- */
-
-#companies {
-    margin: 40px;
-}
-
-.company {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #fafafa;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffabd1, #ffe6a8, #b7d7ff);
+    background-size: 300% 300%;
+    animation: gradientShift 10s infinite alternate;
+    border-radius: 0 0 45px 45px;
+}
+@keyframes gradientShift {
+    0% { background-position: left; }
+    100% { background-position: right; }
 }
 
-.company img {
-    height: 80px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 12px;
+/* SECTIONS */
+section {
+    padding: 60px 10%;
 }
-
-/* ---------------- CONTACT ---------------- */
-
-#contact {
-    margin: 40px;
-    padding: 30px;
-    background: #fafafa;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-}
-
-#contact input, #contact textarea {
-    width: 100%;
-    padding: 12px;
+h2 {
     margin-bottom: 15px;
+    font-size: 32px;
+}
+
+/* OUR COMPANIES */
+.company-grid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+.company-card {
+    width: 220px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #f8f8f8;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.company-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* DEVICES & SERVICES */
+.device-card {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+.device-card h3 {
+    margin-top: 0;
+}
+
+/* CONTACT */
+.contact-box {
+    background: #f8f8f8;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+.contact-box input, .contact-box textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
     border-radius: 12px;
     border: 1px solid #ccc;
 }
-
-button {
-    padding: 12px 20px;
+.contact-box button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
     border: none;
     border-radius: 12px;
-    cursor: pointer;
+    font-size: 17px;
     font-weight: 600;
-    background: #ffd1e6;
+    background: #ffc9de;
 }
 
-button:hover {
-    opacity: 0.7;
-}
-
-/* ---------------- FOOTER ---------------- */
-
+/* FOOTER */
 footer {
-    padding: 20px;
     text-align: center;
-    color: #444;
-    margin-top: 60px;
+    padding: 25px;
+    font-size: 15px;
+    margin-top: 50px;
 }
-
 footer a {
+    font-size: 25px;
     text-decoration: none;
-    font-weight: 600;
 }
-
 </style>
 </head>
+
 <body>
 
-<!-- ---------------- LOADING SCREEN ---------------- -->
+<!-- LOADER -->
 <div id="loader">
-    <img src="https://floprate.netlify.app/wtm.png">
-    <div class="loader-link">Loading…</div>
+    <img src="https://floptrate.netlify.app/wtm.png">
+    <div class="link-loader"></div>
 </div>
 
-<!-- ---------------- NAVBAR ---------------- -->
+<!-- NAVBAR -->
 <nav>
-    <img src="https://floprate.netlify.app/wtm.png">
-
+    <img src="https://floptrate.netlify.app/wtm.png">
     <div>
         <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#services">Our Services</a>
-        <a href="#companies">Our Companies</a>
-        <a href="https://floprate.netlify.app" target="_blank">FlopRate</a>
-        <a href="https://WetTech.netlify.app/fwb" target="_blank">FlopWatch</a>
+        <a href="#aboutus">About Us</a>
+        <a href="#devices">Our Device’s & Services</a>
+        <a href="https://floprate.netlify.app">FlopRate</a>
+        <a href="https://wettech.netlify.app/fwb">FlopWatch</a>
     </div>
 </nav>
 
-<!-- ---------------- HERO ---------------- -->
-<section class="hero" id="home">
+<!-- HERO -->
+<div id="home" class="hero">
     <h1>WetTech</h1>
-    <p>Your central hub for technology, broadcasting connections, and device innovation across Floptropica.</p>
-</section>
+    <p>Your future device ecosystem.</p>
+</div>
 
-<!-- ---------------- ABOUT US ---------------- -->
-<section id="about">
+<!-- ABOUT US -->
+<section id="aboutus">
     <h2>About Us</h2>
-    <p> <!-- You fill this in --> </p>
+    <p>[ You will fill this in later ]</p>
 </section>
 
-<!-- ---------------- SERVICES ---------------- -->
-<section id="services">
-    <h2>Our Services</h2>
-
-    <div class="card">
-        <h3>Devices</h3>
-        <p><!-- You fill this in --></p>
-    </div>
-
-    <div class="card">
-        <h3>Software</h3>
-        <p><!-- You fill this in --></p>
-    </div>
-
-    <div class="card">
-        <h3>Telecoms</h3>
-        <p><!-- You fill this in --></p>
-    </div>
-</section>
-
-<!-- ---------------- OUR COMPANIES ---------------- -->
+<!-- OUR COMPANIES -->
 <section id="companies">
     <h2>Our Companies</h2>
+    <div class="company-grid">
 
-    <div class="company">
-        <img src="https://floprate.netlify.app/fwb.png">
-        <div>
-            <h3>FlopWatch Broadcasting</h3>
-            <p><!-- You fill this in --></p>
+        <div class="company-card">
+            <img src="https://floprate.netlify.app/fwb.png">
+            <p>FlopWatch Broadcasting</p>
         </div>
-    </div>
 
-    <div class="company">
-        <img src="https://floprate.netlify.app/logo.png">
-        <div>
-            <h3>FlopRate</h3>
-            <p><!-- You fill this in --></p>
+        <div class="company-card">
+            <img src="https://floprate.netlify.app/logo.png">
+            <p>FlopRate</p>
         </div>
+
     </div>
 </section>
 
-<!-- ---------------- CONTACT ---------------- -->
+<!-- DEVICES & SERVICES -->
+<section id="devices">
+    <h2>Our Device’s & Services</h2>
+
+    <div class="device-card">
+        <h3>WetTab</h3>
+        <p>Vibrate+ • WetAi • CvmBlast Cooling • 64-bit processor • 8 cores</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetTab+</h3>
+        <p>Larger design • Upgraded cameras • Vibrate+ • WetAi • CvmBlast Cooling • 64-bit • 8 cores</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetTab Ultra</h3>
+        <p>WetAi Enhanced • 69-core system • AESS-Cooling • CvmBlast • High-performance ultra-chipset</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetBox</h3>
+        <p>Compact smart unit • Supports WetLink connectivity • Always-on display clock</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetPhone C1</h3>
+        <p>6.6” panel • 8-core processor • WetAi • CvmShield glass • Long-life 5200mAh battery</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetPhone C1 Ultra</h3>
+        <p>6.9” display • 12-core enhanced chipset • WetAi Ultra • AESS-Cooling • Hyper battery 6200mAh</p>
+    </div>
+
+    <div class="device-card">
+        <h3>WetTech SIM 7G+</h3>
+        <p>Next-gen coverage with ultra-low latency and extended bandwidth.</p>
+
+        <h4>Supported Regions</h4>
+        <p><b>7G+ :</b> Cvmberty Island, Merflopia, Jiafeia</p>
+        <p><b>6G :</b> New Barbados, New Bahamas, C.V.M</p>
+        <p><b>6G+ :</b> Floptopia</p>
+        <p><b>5G :</b> CupcakKia, Floptokia, Potaxiene</p>
+    </div>
+
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
     <h2>Contact</h2>
 
-    <p><b>Address:</b><br>
-    WetTech, 128 Cvm Business District,<br>
-    Cvmberty City, Cvmberty Island, Floptropica (PO: 1263)
-    </p>
+    <div class="contact-box">
+        <p><b>Address:</b><br>WetTech, 128 Cvm Business District, Cvmberty City, Cvmberty Island, Floptropica (PO: 1263)</p>
 
-    <form id="contactForm">
-        <input type="text" id="name" placeholder="Your name" required>
-        <input type="email" id="email" placeholder="Your email" required>
-        <textarea id="msg" placeholder="Your message" rows="6" required></textarea>
-        <button type="submit">Send</button>
-    </form>
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" rows="5" placeholder="Message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
 </section>
 
-<!-- ---------------- FOOTER ---------------- -->
+<!-- FOOTER -->
 <footer>
-    <a href="https://www.tiktok.com/@wettech" target="_blank">TikTok @wettech</a>
+    <a href="https://www.tiktok.com/@wettech">🎵</a>
 </footer>
 
 <script>
-
-/* ---------------- LOADER ---------------- */
+/* LOADER LOGIC */
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.getElementById("loader").style.opacity = "0";
-        setTimeout(() => document.getElementById("loader").style.display = "none", 500);
-    }, 600);
+        setTimeout(() => document.getElementById("loader").remove(), 500);
+    }, 800);
 });
 
-/* ---------------- CONTACT FORM EMAIL SYSTEM ---------------- */
-document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+/* CONTACT FORM HANDLER */
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const msg = document.getElementById("msg").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const msg = document.getElementById("message").value.trim();
 
-    const subject = encodeURIComponent("WetTech – Feedback (" + name + ")");
-    const body = encodeURIComponent(
-        "Name: " + name +
-        "\nEmail: " + email +
-        "\n\nMessage:\n" + msg
-    );
+    const subject = encodeURIComponent(`WetTech – Feedback: ${name}`);
+    const body = encodeURIComponent(`From: ${name} (${email})\n\n${msg}`);
 
-    window.location.href =
-        "mailto:floprate.by.fwb@gmail.com?subject=" + subject + "&body=" + body;
+    window.location.href = `mailto:floprate.by.fwb@gmail.com?subject=${subject}&body=${body}`;
 });
-
 </script>
 
 </body>
