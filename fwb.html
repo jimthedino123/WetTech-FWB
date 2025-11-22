@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlopWatch Broadcasting</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script&family=Luckiest+Guy&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:sans-serif;background:#fff;}
+nav{display:flex;justify-content:space-between;padding:18px 30px;background:#fff;border-bottom:2px solid #ffd6e9;position:sticky;top:0;z-index:10;}
+nav img{height:45px;}
+nav a{margin-left:18px;text-decoration:none;font-weight:600;color:#333;}
+.hero{padding:100px 30px;text-align:center;color:#333;background:linear-gradient(120deg,#ffd2e6,#fff6d1,#d3e3ff);background-size:400% 400%;animation:gradientMove 12s ease infinite;border-bottom-left-radius:40px;border-bottom-right-radius:40px;}
+@keyframes gradientMove{0%{background-position:0%;}50%{background-position:100%;}100%{background-position:0%;}}
+.hero h1{font-size:48px;margin-bottom:10px;}
+.hero p{font-size:20px;}
+section{padding:70px 30px;}
+.show-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;}
+.show-card{background:#fff;padding:20px;border-radius:20px;box-shadow:0 0 10px #ffd9ec70;text-align:center;}
+.show-card h3{margin-bottom:10px;}
+.fwb-news{font-family:'Anton',sans-serif;font-weight:bold;color:#d40000;}
+.flopney-plus{font-family:'Luckiest Guy',cursive;color:#2b59ff;}
+.product-channel{font-family:'Dancing Script',cursive;color:#ff5a9b;}
+.deborah-show{font-family:'Dancing Script',cursive;color:#ff8c42;}
+.jiafei-movie{font-family:'Uncial Antiqua',cursive;color:#663300;}
+.floprate-box{background:#fff;padding:25px;border-radius:20px;box-shadow:0 0 10px #ffd9ec70;}
+footer{background:#fff0fb;padding:40px;text-align:center;border-top:2px solid #ffd4e7;margin-top:90px;}
+footer a{text-decoration:none;font-weight:600;font-size:20px;}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <img src="fwb.png" alt="FlopWatch Broadcasting Logo">
+    <div>
+        <a href="#home">Home</a>
+        <a href="#shows">Shows</a>
+        <a href="#floprate">FlopRate</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="home">
+    <h1>Welcome to FlopWatch Broadcasting</h1>
+    <p>Quality shows and movies for Floptropica viewers</p>
+</div>
+
+<!-- SHOWS -->
+<section id="shows">
+    <h2>Our Shows & Movies</h2>
+    <div class="show-grid">
+        <div class="show-card">
+            <h3 class="fwb-news">FlopWatch News</h3>
+        </div>
+        <div class="show-card">
+            <h3 class="flopney-plus">Flopney+</h3>
+        </div>
+        <div class="show-card">
+            <h3 class="product-channel">The Product Channel</h3>
+        </div>
+        <div class="show-card">
+            <h3 class="deborah-show">Deborah Ali Williams: THE SHOW</h3>
+        </div>
+        <div class="show-card">
+            <h3 class="jiafei-movie">The Tale of Jiafei</h3>
+        </div>
+    </div>
+</section>
+
+<!-- FLOPRATE -->
+<section id="floprate">
+    <h2>Our Age Rating System: FlopRate</h2>
+    <div class="floprate-box">
+        <p>FlopRate is the official Floptropican rating system for shows and movies produced by us and our partners. Each title is evaluated for age-appropriateness, content, and themes. FR-K is suitable for all ages. FR-PG is suitable for 7+ with parental supervision. FR-T is suitable for teenagers. FR-R is suitable only for adults.</p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>FlopWatch Broadcasting — Part of WetTech</p>
+    <br>
+    <a href="https://www.tiktok.com/@wettech" target="_blank">TikTok</a>
+</footer>
+
+</body>
+</html>
