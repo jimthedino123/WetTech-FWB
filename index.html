@@ -1,326 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WetTech</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WetTech</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #333;
+      scroll-behavior: smooth;
+    }
 
-<style>
-/* GLOBAL */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #ffffff;
-    color: #333;
-    scroll-behavior: smooth;
-}
+    /* LOADER */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #loader img {
+      width: 120px;
+      height: auto;
+    }
+    .link-loader {
+      margin-top: 20px;
+      width: 60px;
+      height: 6px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ddd;
+      position: relative;
+    }
+    .link-loader::after {
+      content: "";
+      position: absolute;
+      left: -40px;
+      top: 0;
+      width: 40px;
+      height: 100%;
+      background: linear-gradient(90deg, #ffabd1, #ffe6a8, #b7d7ff);
+      animation: linkMove 1s infinite linear;
+    }
+    @keyframes linkMove {
+      0% { left: -40px; }
+      100% { left: 100%; }
+    }
 
-/* LOADING SCREEN */
-#loader {
-    position: fixed;
-    inset: 0;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-#loader img {
-    width: 120px;
-    height: auto;
-}
-.link-loader {
-    margin-top: 20px;
-    width: 60px;
-    height: 6px;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #ddd;
-    position: relative;
-}
-.link-loader::after {
-    content: "";
-    position: absolute;
-    left: -40px;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    background: linear-gradient(90deg, #ffabd1, #ffe6a8, #b7d7ff);
-    animation: linkMove 1s infinite linear;
-}
-@keyframes linkMove {
-    0% { left: -40px; }
-    100% { left: 100%; }
-}
+    /* NAV */
+    nav {
+      width: 100%;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-radius: 0 0 20px 20px;
+    }
+    nav img {
+      height: 45px;
+      border-radius: 10px;
+    }
+    nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
 
-/* NAVBAR */
-nav {
-    width: 100%;
-    padding: 15px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-radius: 0 0 20px 20px;
-}
-nav img {
-    height: 45px;
-    border-radius: 10px;
-}
-nav a {
-    margin-left: 18px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-}
+    /* HERO */
+    .hero {
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      color: #333;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffabd1, #ffe6a8, #b7d7ff);
+      background-size: 300% 300%;
+      animation: gradientShift 10s infinite alternate;
+      border-radius: 0 0 45px 45px;
+    }
+    @keyframes gradientShift {
+      0% { background-position: left; }
+      100% { background-position: right; }
+    }
+    .hero h1 { margin: 0; font-size: 48px; }
+    .hero p { margin-top: 10px; font-size: 20px; }
 
-/* HERO */
-.hero {
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    color: #333;
-    padding: 20px;
-    background: linear-gradient(135deg, #ffabd1, #ffe6a8, #b7d7ff);
-    background-size: 300% 300%;
-    animation: gradientShift 10s infinite alternate;
-    border-radius: 0 0 45px 45px;
-}
-@keyframes gradientShift {
-    0% { background-position: left; }
-    100% { background-position: right; }
-}
+    /* SECTIONS */
+    section { padding: 60px 10%; }
+    h2 { margin-bottom: 15px; font-size: 32px; }
 
-/* SECTIONS */
-section {
-    padding: 60px 10%;
-}
-h2 {
-    margin-bottom: 15px;
-    font-size: 32px;
-}
+    /* COMPANIES */
+    .company-grid {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .company-card {
+      width: 220px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #f8f8f8;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .company-card img {
+      width: auto;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .company-card p {
+      margin-top: 10px;
+      font-weight: 600;
+    }
 
-/* OUR COMPANIES */
-.company-grid {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-.company-card {
-    width: 220px;
-    padding: 20px;
-    border-radius: 18px;
-    background: #f8f8f8;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    text-align: center;
-}
-.company-card img {
-    width: 100%;
-    height: 120px;
-    object-fit: contain;
-    border-radius: 10px;
-}
+    /* DEVICES & SERVICES */
+    .device-card {
+      background: #f8f8f8;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    .device-card h3 {
+      margin-top: 0;
+    }
 
-/* DEVICES & SERVICES */
-.device-card {
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-}
-.device-card h3 {
-    margin-top: 0;
-}
+    /* SIM ACTIVATION */
+    .sim-box {
+      background: #f8f8f8;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      max-width: 400px;
+    }
+    .sim-box input, .sim-box select {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+    }
+    .sim-box button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      background: #ffc9de;
+      cursor: pointer;
+    }
+    .sim-result {
+      margin-top: 20px;
+      font-weight: 600;
+      color: #222;
+    }
 
-/* CONTACT */
-.contact-box {
-    background: #f8f8f8;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-}
-.contact-box input, .contact-box textarea {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-}
-.contact-box button {
-    margin-top: 15px;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 12px;
-    font-size: 17px;
-    font-weight: 600;
-    background: #ffc9de;
-}
+    /* CONTACT */
+    .contact-box {
+      background: #f8f8f8;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      max-width: 500px;
+    }
+    .contact-box input, .contact-box textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+    }
+    .contact-box button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      background: #ffc9de;
+      cursor: pointer;
+    }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 25px;
-    font-size: 15px;
-    margin-top: 50px;
-}
-footer a {
-    font-size: 25px;
-    text-decoration: none;
-}
-</style>
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 15px;
+      margin-top: 50px;
+    }
+    footer a {
+      font-size: 25px;
+      text-decoration: none;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-    <img src="https://floptrate.netlify.app/wtm.png">
+  <!-- LOADER -->
+  <div id="loader">
+    <img src="https://floptrate.netlify.app/wtm.png" alt="WetTech logo">
     <div class="link-loader"></div>
-</div>
+  </div>
 
-<!-- NAVBAR -->
-<nav>
-    <img src="https://floptrate.netlify.app/wtm.png">
+  <!-- NAVBAR -->
+  <nav>
+    <img src="https://floptrate.netlify.app/wtm.png" alt="WetTech logo">
     <div>
-        <a href="#home">Home</a>
-        <a href="#aboutus">About Us</a>
-        <a href="#devices">Our Device’s & Services</a>
-        <a href="https://floprate.netlify.app">FlopRate</a>
-        <a href="https://wettech.netlify.app/fwb">FlopWatch</a>
+      <a href="#home">Home</a>
+      <a href="#aboutus">About Us</a>
+      <a href="#devices">Our Devices & Services</a>
+      <a href="https://floprate.netlify.app" target="_blank">FlopRate</a>
+      <a href="https://wettech.netlify.app/fwb" target="_blank">FlopWatch</a>
     </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<div id="home" class="hero">
+  <!-- HERO -->
+  <div id="home" class="hero">
     <h1>WetTech</h1>
     <p>Your future device ecosystem.</p>
-</div>
+  </div>
 
-<!-- ABOUT US -->
-<section id="aboutus">
+  <!-- ABOUT US -->
+  <section id="aboutus">
     <h2>About Us</h2>
-    <p>[ You will fill this in later ]</p>
-</section>
+    <p>
+      We are more than just a company; we are one of Floptropica’s leading technology and telecommunications companies.
+      We are continually upgrading with new projects such as WetTech 7G+, WetTech 7G and FlopCvmnect.
+      This service is faster than all others with the latest WetTech SIMs and is the latest version of the leading telecom service.
+      We also have other projects such as FlopWatch Broadcasting where we produce quality shows for you to enjoy!
+    </p>
+  </section>
 
-<!-- OUR COMPANIES -->
-<section id="companies">
+  <!-- OUR COMPANIES -->
+  <section id="companies">
     <h2>Our Companies</h2>
     <div class="company-grid">
 
-        <div class="company-card">
-            <img src="https://floprate.netlify.app/fwb.png">
-            <p>FlopWatch Broadcasting</p>
-        </div>
+      <div class="company-card">
+        <img src="https://floprate.netlify.app/fwb.png" alt="FlopWatch Broadcasting logo">
+        <p>FlopWatch Broadcasting</p>
+      </div>
 
-        <div class="company-card">
-            <img src="https://floprate.netlify.app/logo.png">
-            <p>FlopRate</p>
-        </div>
+      <div class="company-card">
+        <img src="https://floprate.netlify.app/logo.png" alt="FlopRate logo">
+        <p>FlopRate</p>
+      </div>
 
     </div>
-</section>
+  </section>
 
-<!-- DEVICES & SERVICES -->
-<section id="devices">
-    <h2>Our Device’s & Services</h2>
-
-    <div class="device-card">
-        <h3>WetTab</h3>
-        <p>Vibrate+ • WetAi • CvmBlast Cooling • 64-bit processor • 8 cores</p>
-    </div>
+  <!-- DEVICES & SERVICES -->
+  <section id="devices">
+    <h2>Our Devices & Services</h2>
 
     <div class="device-card">
-        <h3>WetTab+</h3>
-        <p>Larger design • Upgraded cameras • Vibrate+ • WetAi • CvmBlast Cooling • 64-bit • 8 cores</p>
+      <h3>WetTab</h3>
+      <p>Vibrate+ • WetAi • CvmBlast Cooling • 64-bit processor • 8 cores</p>
     </div>
 
     <div class="device-card">
-        <h3>WetTab Ultra</h3>
-        <p>WetAi Enhanced • 69-core system • AESS-Cooling • CvmBlast • High-performance ultra-chipset</p>
+      <h3>WetTab+</h3>
+      <p>Larger design • Advanced cameras • Vibrate+ • WetAi • CvmBlast Cooling • 64-bit • 8 cores</p>
     </div>
 
     <div class="device-card">
-        <h3>WetBox</h3>
-        <p>Compact smart unit • Supports WetLink connectivity • Always-on display clock</p>
+      <h3>WetTab Ultra</h3>
+      <p>WetAi Enhanced • 69-core system • AESS-Cooling • CvmBlast • Ultra performance chipset</p>
     </div>
 
     <div class="device-card">
-        <h3>WetPhone C1</h3>
-        <p>6.6” panel • 8-core processor • WetAi • CvmShield glass • Long-life 5200mAh battery</p>
+      <h3>WetBox</h3>
+      <p>Smart unit with WetLink support • Always-on clock display</p>
     </div>
 
     <div class="device-card">
-        <h3>WetPhone C1 Ultra</h3>
-        <p>6.9” display • 12-core enhanced chipset • WetAi Ultra • AESS-Cooling • Hyper battery 6200mAh</p>
+      <h3>WetPhone C1</h3>
+      <p>6.6″ display • 8-core CPU • WetAi • CvmShield glass • 5200 mAh battery</p>
     </div>
 
     <div class="device-card">
-        <h3>WetTech SIM 7G+</h3>
-        <p>Next-gen coverage with ultra-low latency and extended bandwidth.</p>
-
-        <h4>Supported Regions</h4>
-        <p><b>7G+ :</b> Cvmberty Island, Merflopia, Jiafeia</p>
-        <p><b>6G :</b> New Barbados, New Bahamas, C.V.M</p>
-        <p><b>6G+ :</b> Floptopia</p>
-        <p><b>5G :</b> CupcakKia, Floptokia, Potaxiene</p>
+      <h3>WetPhone C1 Ultra</h3>
+      <p>6.9″ screen • 12-core enhanced chipset • WetAi Ultra • AESS-Cooling • 6200 mAh high-capacity battery</p>
     </div>
 
-</section>
+    <div class="device-card">
+      <h3>WetTech SIM 7G+</h3>
+      <p>Next-gen connectivity with ultra-low latency and broad coverage.</p>
 
-<!-- CONTACT -->
-<section id="contact">
+      <h4>SIM Coverage Regions</h4>
+      <p><strong>7G+ :</strong> Cvmberty Island, Merflopia & Jiafeia</p>
+      <p><strong>6G :</strong> New Barbados, New Bahamas & C.V.M</p>
+      <p><strong>6G+ :</strong> Floptopia</p>
+      <p><strong>5G :</strong> CupcakKia, Floptokia & Potaxiene</p>
+    </div>
+  </section>
+
+  <!-- SIM ACTIVATION -->
+  <section id="simactivation">
+    <h2>SIM Activation</h2>
+    <div class="sim-box">
+      <label for="activationCode">Activation Code:</label>
+      <input type="text" id="activationCode" placeholder="Enter your SIM code">
+
+      <label for="region">Region:</label>
+      <select id="region">
+        <option value="Cvmberty">Cvmberty Island</option>
+        <option value="Merflopia">Merflopia</option>
+        <option value="Jiafeia">Jiafeia</option>
+        <option value="NewBarbados">New Barbados</option>
+        <option value="NewBahamas">New Bahamas</option>
+        <option value="CVM">C.V.M</option>
+        <option value="Floptopia">Floptopia</option>
+        <option value="CupcakKia">CupcakKia</option>
+        <option value="Floptokia">Floptokia</option>
+        <option value="Potaxiene">Potaxiene</option>
+      </select>
+
+      <button id="activateBtn">Activate SIM</button>
+
+      <div id="simResult" class="sim-result"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
     <h2>Contact</h2>
-
     <div class="contact-box">
-        <p><b>Address:</b><br>WetTech, 128 Cvm Business District, Cvmberty City, Cvmberty Island, Floptropica (PO: 1263)</p>
-
-        <form id="contactForm">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <textarea id="message" rows="5" placeholder="Message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
+      <p><strong>Address:</strong><br>
+        WetTech, 128 Cvm Business District,<br>
+        Cvmberty City, Cvmberty Island, Floptropica (PO: 1263)
+      </p>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" rows="5" placeholder="Message" required></textarea>
+        <button type="submit">Send</button>
+      </form>
     </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-    <a href="https://www.tiktok.com/@wettech">🎵</a>
-</footer>
+  <footer>
+    <a href="https://www.tiktok.com/@wettech" target="_blank">🎵</a>
+  </footer>
 
-<script>
-/* LOADER LOGIC */
-window.addEventListener("load", () => {
-    setTimeout(() => {
+  <script>
+    // LOADER
+    window.addEventListener("load", () => {
+      setTimeout(() => {
         document.getElementById("loader").style.opacity = "0";
         setTimeout(() => document.getElementById("loader").remove(), 500);
-    }, 800);
-});
+      }, 800);
+    });
 
-/* CONTACT FORM HANDLER */
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    // CONTACT FORM
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const msg = document.getElementById("message").value.trim();
+      const subject = encodeURIComponent(`WetTech – Feedback: ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+      window.location.href = `mailto:floprate.by.fwb@gmail.com?subject=${subject}&body=${body}`;
+    });
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const msg = document.getElementById("message").value.trim();
+    // SIM ACTIVATION
+    document.getElementById("activateBtn").addEventListener("click", function() {
+      const code = document.getElementById("activationCode").value.trim();
+      const region = document.getElementById("region").value;
+      const resultEl = document.getElementById("simResult");
 
-    const subject = encodeURIComponent(`WetTech – Feedback: ${name}`);
-    const body = encodeURIComponent(`From: ${name} (${email})\n\n${msg}`);
+      if (!code) {
+        resultEl.textContent = "Please enter a valid activation code.";
+        return;
+      }
 
-    window.location.href = `mailto:floprate.by.fwb@gmail.com?subject=${subject}&body=${body}`;
-});
-</script>
+      // Based on Floptok phone number rules: country code +698, mobile new numbers start with 4.  [oai_citation:1‡floptok.fandom.com](https://floptok.fandom.com/wiki/Phone_numbers_in_Floptropica?utm_source=chatgpt.com)
+      // We'll generate a fake phone number:
+      const prefix = "+698 ";
+      // generate 7 random digits (to make a 10-digit number starting with "4")
+      const numberBody = "4" + Array.from({ length: 8 }, () => Math.floor(Math.random() * 10)).join("");
+      const phoneNumber = prefix + numberBody;
+
+      resultEl.textContent = `Your new Floptropica phone number: ${phoneNumber}`;
+    });
+  </script>
 
 </body>
 </html>
