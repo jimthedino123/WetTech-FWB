@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WetTech — Home</title>
+<meta name="theme-color" content="#ffdff0">
+<style>
+  /* ---------- Reset & Base ---------- */
+  :root{
+    --bg: #fff8fb;
+    --card: #fff;
+    --muted: #7a6b78;
+    --accent-pink: #ffd9e6;
+    --accent-stroke: #ffd1df;
+    --accent-hue: #ff9ec8; /* stronger pink for accents */
+    --radius: 14px;
+    --glass: rgba(255,255,255,0.8);
+    --shadow: 0 8px 28px rgba(20,18,20,0.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+    color:#2b2430;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+    -webkit-tap-highlight-color: transparent;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- Loading Overlay ---------- */
+  .loader-overlay{
+    --size:90px;
+    position:fixed;
+    inset:0;
+    background:linear-gradient(180deg, #fff 0%, #fff6f9 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    transition:opacity .45s ease, visibility .45s;
+  }
+  .loader-inner{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.88));
+    padding:18px 22px;
+    border-radius:18px;
+    box-shadow: 0 12px 40px rgba(40,20,40,0.06);
+    border: 1px solid var(--accent-stroke);
+  }
+  .loader-logo{
+    width:64px;height:64px;border-radius:10px;object-fit:cover;flex-shrink:0;
+    box-shadow:0 8px 20px rgba(0,0,0,0.06);
+  }
+  .spinner{
+    width:48px;height:48px;border-radius:50%;
+    border:5px solid rgba(255,160,190,0.35);
+    border-top-color:var(--accent-hue);
+    animation:spin 1s linear infinite;
+    box-shadow:inset 0 0 12px rgba(255,180,205,0.12);
+  }
+  @keyframes spin {to{transform:rotate(360deg)}}
+
+  /* ---------- Page container ---------- */
+  .wrap{
+    max-width:1180px;
+    margin:28px auto;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  /* ---------- Header / Nav ---------- */
+  header.site-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:linear-gradient(180deg,var(--card), #fff);
+    padding:12px 16px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--accent-stroke);
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+  }
+  .brand img{
+    width:56px;height:56px;border-radius:12px;object-fit:cover;
+    background:var(--accent-pink);padding:6px;
+    border:1px solid rgba(0,0,0,0.04);
+  }
+  .brand .title{font-weight:700;font-size:18px}
+  nav.nav{
+    margin-left:auto;display:flex;gap:12px;align-items:center;
+  }
+  nav.nav a{
+    padding:8px 12px;border-radius:10px;color:var(--muted);
+    font-weight:600;font-size:14px;
+  }
+  nav.nav a.primary{
+    background:linear-gradient(180deg, #fff 0%, var(--accent-pink) 100%);
+    color: #3a2230;
+    border:1px solid var(--accent-stroke);
+    box-shadow: 0 6px 18px rgba(255,180,200,0.08);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    border-radius:var(--radius);
+    overflow:hidden;
+    position:relative;
+    min-height:320px;
+    display:flex;
+    align-items:center;
+    padding:28px;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(0,0,0,0.03);
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));
+  }
+
+  /* Animated pastel gradient underside */
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    z-index:0;
+    background: linear-gradient(120deg,
+      rgba(255,209,224,0.95) 0%,
+      rgba(255,249,208,0.92) 40%,
+      rgba(208,235,255,0.92) 100%);
+    filter: blur(18px);
+    transform: scale(1.08);
+    transition:opacity .4s;
+    animation:heroShift 10s linear infinite;
+    mix-blend-mode: multiply;
+  }
+  @keyframes heroShift {
+    0% {background-position:0% 50%;}
+    25% {background-position:50% 20%;}
+    50% {background-position:100% 50%;}
+    75% {background-position:50% 80%;}
+    100% {background-position:0% 50%;}
+  }
+  .hero-content{position:relative;z-index:1;display:flex;gap:22px;align-items:center;width:100%}
+  .hero-left{flex:1;max-width:64%}
+  .hero h1{margin:0;font-size:28px;color:#3b2030}
+  .hero p.lead{margin:10px 0 0;color:var(--muted)}
+  .hero .actions{margin-top:16px;display:flex;gap:12px}
+
+  .btn{
+    padding:10px 14px;border-radius:12px;border:0;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,0.04);
+    background:linear-gradient(180deg,var(--accent-hue), #ffbfd6);
+    color:#3a2230;
+  }
+  .btn.ghost{
+    background:transparent;border:1px solid var(--accent-stroke);color:var(--muted);
+  }
+
+  .hero-right{width:220px;text-align:center}
+  .hero-right img{
+    width:160px;height:160px;border-radius:14px;object-fit:contain;background:#fff;padding:10px;border:1px solid var(--accent-stroke);
+    box-shadow:0 10px 28px rgba(0,0,0,0.06);
+  }
+  .partners-summary{margin-top:10px;font-size:13px;color:var(--muted)}
+
+  /* ---------- Main grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 340px;
+    gap:18px;
+    align-items:start;
+  }
+
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:16px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(0,0,0,0.03);
+  }
+
+  h2.section-title{margin:0 0 8px 0;font-size:18px;color:#34202b}
+
+  /* companies */
+  .partners{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .partner{
+    display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff9fb);
+    border:1px solid var(--accent-stroke);min-width:170px;box-shadow:0 6px 18px rgba(30,20,30,0.03)
+  }
+  .partner img{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(0,0,0,0.04)}
+
+  /* services list */
+  .services-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+  .service{
+    padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff8f9);border:1px solid var(--accent-stroke);
+    text-align:center;font-weight:700;color:#3a2430;font-size:14px;
+  }
+
+  /* contact */
+  .contact-address{font-size:14px;color:var(--muted);line-height:1.5}
+  .contact-form{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .contact-form input, .contact-form textarea{
+    padding:10px;border-radius:10px;border:1px solid var(--accent-stroke);background:#fff;font-size:14px;color:#32222b;
+  }
+  .contact-form textarea{min-height:110px;resize:vertical}
+
+  /* footer */
+  footer.site-footer{margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff8fb);border:1px solid rgba(0,0,0,0.03);display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+
+  /* small screens */
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr;gap:12px}
+    .hero-left{max-width:100%}
+    nav.nav{display:none}
+  }
+
+  /* subtle focus for accessibility */
+  a:focus, button:focus, input:focus, textarea:focus {outline:3px solid rgba(255,160,190,0.25);outline-offset:2px}
+</style>
+</head>
+<body>
+  <!-- LOADING OVERLAY -->
+  <div id="loader" class="loader-overlay" aria-hidden="false">
+    <div class="loader-inner" role="status" aria-live="polite">
+      <img src="https://floptrate.netlify.app/wtm.png" alt="WetTech logo" class="loader-logo" onerror="this.style.display='none'">
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+        <div style="font-weight:800;color:#462736;font-size:16px">WetTech</div>
+        <div style="font-size:13px;color:var(--muted)">Preparing your pastel experience...</div>
+      </div>
+      <div style="width:18px"></div>
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="wrap" id="pageWrap" style="visibility:hidden;opacity:0;transition:opacity .35s, visibility .35s">
+    <header class="site-header" role="banner">
+      <div class="brand" role="img" aria-label="WetTech">
+        <img src="https://floptrate.netlify.app/wtm.png" alt="WetTech logo" id="navLogo" onerror="this.style.display='none'">
+        <div>
+          <div class="title">WetTech</div>
+          <div style="font-size:12px;color:var(--muted)">wet, wired & pastel</div>
+        </div>
+      </div>
+
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Our Services</a>
+        <a class="nav-link primary" href="https://floprate.netlify.app" target="_blank" rel="noopener">FlopRate</a>
+        <a class="nav-link primary" href="https://WetTech.netlify.app/fwb" target="_blank" rel="noopener">FlopWatch</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="heroTitle">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 id="heroTitle">WetTech — pastel solutions for Floptropica</h1>
+          <p class="lead">We build devices, software and telecoms for the wet and weird corners of Floptropica. (You can fill the About and Services text later.)</p>
+          <div class="actions">
+            <button class="btn" id="ctaExplore">Explore services</button>
+            <button class="btn ghost" id="ctaContact">Contact us</button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <img src="https://floptrate.netlify.app/wtm.png" alt="WetTech mark" onerror="this.style.display='none'">
+          <div class="partners-summary">Partners: FlopWatch Broadcasting · FlopRate</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <div class="grid">
+      <main>
+        <!-- ABOUT (left empty for you to fill) -->
+        <section id="about" class="card" aria-labelledby="aboutTitle">
+          <h2 id="aboutTitle" class="section-title">About WetTech</h2>
+          <p style="color:var(--muted)">You told me you'd fill this in — so I've left space here. Paste your company description here or edit directly in the HTML later.</p>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="card" style="margin-top:12px" aria-labelledby="servicesTitle">
+          <h2 id="servicesTitle" class="section-title">Our Services</h2>
+          <p class="muted" style="margin:0 0 8px 0">Core categories — fill the specific product/service details later.</p>
+          <div class="services-list" aria-hidden="false">
+            <div class="service">Devices</div>
+            <div class="service">Software</div>
+            <div class="service">Telecoms</div>
+          </div>
+        </section>
+
+        <!-- Our Companies -->
+        <section class="card" style="margin-top:12px" aria-labelledby="companiesTitle">
+          <h2 id="companiesTitle" class="section-title">Our Companies</h2>
+          <p class="muted" style="margin:0 0 8px 0">Click a company to visit their site.</p>
+          <div class="partners" role="list">
+            <a class="partner" href="https://WetTech.netlify.app/fwb" target="_blank" rel="noopener" role="listitem" aria-label="FlopWatch Broadcasting">
+              <img src="https://floprate.netlify.app/fwb.png" alt="FlopWatch Broadcasting logo" onerror="this.style.display='none'">
+              <div style="min-width:0">
+                <div style="font-weight:800">FlopWatch Broadcasting</div>
+                <div style="font-size:13px;color:var(--muted)">Broadcast & content</div>
+              </div>
+            </a>
+
+            <a class="partner" href="https://floprate.netlify.app" target="_blank" rel="noopener" role="listitem" aria-label="FlopRate">
+              <img src="https://floprate.netlify.app/logo.png" alt="FlopRate logo" onerror="this.style.display='none'">
+              <div style="min-width:0">
+                <div style="font-weight:800">FlopRate</div>
+                <div style="font-size:13px;color:var(--muted)">Ratings & reviews</div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Spacer -->
+        <div style="height:18px"></div>
+
+      </main>
+
+      <!-- RIGHT COLUMN: Contact -->
+      <aside>
+        <section class="card" aria-labelledby="contactTitle">
+          <h2 id="contactTitle" class="section-title">Contact</h2>
+          <div class="contact-address">
+            <strong>Address</strong><br>
+            WetTech<br>
+            128 Cvm Business District<br>
+            Cvmberty City, Cvmberty Island, Floptropica<br>
+            (PO: 1263)
+          </div>
+
+          <div style="height:8px"></div>
+
+          <div class="contact-form" aria-label="Contact form">
+            <input id="contactName" type="text" placeholder="Your name" aria-label="Your name">
+            <input id="contactEmail" type="email" placeholder="Your email" aria-label="Your email">
+            <textarea id="contactMessage" placeholder="Message (this form is front-end only)" aria-label="Message"></textarea>
+            <button class="btn" id="sendContact">Send (front-end)</button>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-start">
+            <a href="https://www.tiktok.com/@wettech" target="_blank" rel="noopener" aria-label="WetTech TikTok">
+              <!-- simple TikTok-ish SVG icon -->
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="border-radius:8px;background:#fff;padding:6px;border:1px solid var(--accent-stroke)">
+                <path d="M9 3v10.5A4.5 4.5 0 0013.5 18 4.5 4.5 0 0020 13.5V8h-2.5v5.5A2 2 0 0115.5 16 2 2 0 0113.5 14 2 2 0 0111.5 12V3H9z" fill="#111"/>
+                <path d="M14.5 3v7.5h2v-1.2a4.5 4.5 0 01-2-6.3z" fill="#ff6ea6"/>
+              </svg>
+            </a>
+            <div style="font-size:13px;color:var(--muted)">Find us on TikTok: <a href="https://www.tiktok.com/@wettech" target="_blank" rel="noopener" style="color:var(--accent-hue);font-weight:700">@wettech</a></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+      <div>© WetTech — All rights reserved.</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div style="font-size:13px;color:var(--muted)">Contact: <a href="mailto:hello@wettech.flop" style="color:var(--muted);font-weight:700">hello@wettech.flop</a></div>
+      </div>
+    </footer>
+  </div>
+
+<script>
+  // ---------- Loading overlay logic ----------
+  const loader = document.getElementById('loader');
+  const pageWrap = document.getElementById('pageWrap');
+
+  // Hide loader once page fully loads or after a maximum timeout to avoid stuck states.
+  function hideLoader(){
+    if(!loader) return;
+    loader.style.opacity = '0';
+    loader.style.visibility = 'hidden';
+    pageWrap.style.visibility = 'visible';
+    pageWrap.style.opacity = '1';
+  }
+
+  // Wait for load event OR hide after 1.2s if faster.
+  let loaded = false;
+  window.addEventListener('load', ()=>{
+    loaded = true;
+    setTimeout(hideLoader, 250); // tiny delay so user sees transition
+  });
+  // fallback: ensure loader hides within 2s if 'load' doesn't fire for some reason.
+  setTimeout(()=>{
+    if(!loaded) hideLoader();
+  }, 2000);
+
+  // ---------- Basic interactivity ----------
+  document.getElementById('ctaExplore').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const el = document.getElementById('services');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  document.getElementById('ctaContact').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const el = document.getElementById('contactTitle');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // Fake contact send: shows a friendly confirmation and logs the contents to console.
+  document.getElementById('sendContact').addEventListener('click', ()=>{
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const msg = document.getElementById('contactMessage').value.trim();
+    if(!name || !email || !msg){
+      alert('Please fill your name, email and message (this form is front-end only).');
+      return;
+    }
+    // pretend to send
+    console.log('Contact form (front-end):', {name,email,msg});
+    alert('Thanks ' + name + '! Your message is noted (front-end demo only).');
+    // clear fields
+    document.getElementById('contactName').value = '';
+    document.getElementById('contactEmail').value = '';
+    document.getElementById('contactMessage').value = '';
+  });
+
+  // Smooth hash navigation for nav links
+  document.querySelectorAll('a.nav-link').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const href = a.getAttribute('href') || '';
+      if(href.startsWith('#')){
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // Accessibility: allow keyboard escape to hide loader if visible (useful for dev)
+  document.addEventListener('keydown', (ev)=>{
+    if(ev.key === 'Escape'){
+      hideLoader();
+    }
+  });
+</script>
+</body>
+</html>
